@@ -13,7 +13,12 @@ public class Projectile : MonoBehaviour {
 			Vector3 dir = (target.transform.position - transform.position).normalized;
 			transform.Translate(dir * speed * Time.deltaTime);
 		} else {
-			Destroy(gameObject);
+			transform.GetComponent<Renderer>().enabled = false;
+			transform.GetComponent<ParticleSystem>().Stop();
+		}
+
+		if (transform.GetComponent<Renderer>().enabled == false) {		
+			Destroy(gameObject,5f);
 		}
 	}
 }
