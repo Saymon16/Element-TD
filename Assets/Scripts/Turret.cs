@@ -64,6 +64,7 @@ public class Turret : MonoBehaviour
 			if (InRange(target)) {
 				if (Time.time >= nextShot) {
 					nextShot = timeBetweenShots + Time.time;
+					damage = CalculateDamage();
 					ShootAt(target, damage);
 				}
 			} else {
@@ -73,7 +74,6 @@ public class Turret : MonoBehaviour
 			if (Time.time >= nextTargetScan) {
 				nextTargetScan = 0.5f + Time.time;
 				ChooseNextTarget();
-				damage = CalculateDamage();
 			}
 		}
 	}
@@ -196,12 +196,13 @@ public class Turret : MonoBehaviour
 				}
 				break;			
 		}
+		return 1f;
 	}
 
 	float CalculateDamage()
 	{
 		Enemy e = target.GetComponent<Enemy>();
-		float coef;
+		float coef = 1f;
 		float c1, c2, c3;
 		c1 = EvaluateElementCoefficient(e.element, this.first);
 		c2 = EvaluateElementCoefficient(e.element, this.second);
