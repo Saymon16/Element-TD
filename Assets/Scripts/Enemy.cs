@@ -17,11 +17,12 @@ public class Enemy : MonoBehaviour
 
 	;
 
+	public float score;
 	public Element element;
 	public float gold;
 	public float speed;
 	public float health;
-	float maxhealth;
+	public float maxhealth;
 	public Image healthBar;
 
 	public event Action reachedEndEvent;
@@ -59,7 +60,7 @@ public class Enemy : MonoBehaviour
 		} else {
 			healthBar.rectTransform.parent.gameObject.SetActive(true);
 		}
-		float scale = Mathf.Clamp01(health/maxhealth);
+		float scale = Mathf.Clamp01(health / maxhealth);
 		healthBar.rectTransform.localScale = new Vector3(scale, 1, 1);
 	}
 

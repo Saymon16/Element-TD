@@ -32,7 +32,9 @@ public class WaveGenerator : MonoBehaviour
 
 		w.size = Mathf.Clamp(((s - 3.7f) / -3.5f), 0.2f, 1.5f);
 
-		w.gold=Mathf.RoundToInt( (float)score*0.015f);
+		w.gold = Mathf.RoundToInt(Mathf.Max (1,(float)score * 0.2f / w.number));
+
+		w.score = Mathf.RoundToInt((r * numberC) + (w.health * healthC) + (s * speedC));
 
 		return w;
 

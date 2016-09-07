@@ -93,7 +93,7 @@ public class Turret : MonoBehaviour
 						return 1f;
 						break;
 					case Turret.Element.M:
-						return 1f;
+						return 0.5f;
 						break;
 					case Turret.Element.T:
 						return 0.8f;
@@ -118,7 +118,7 @@ public class Turret : MonoBehaviour
 						return 1.2f;
 						break;
 					case Turret.Element.T:
-						return 1f;
+						return 0.5f;
 						break;
 					case Turret.Element.F:
 						return 0.8f;
@@ -143,7 +143,7 @@ public class Turret : MonoBehaviour
 						return 1.2f;
 						break;
 					case Turret.Element.F:
-						return 1f;
+						return 0.5f;
 						break;
 					case Turret.Element.B:
 						return 0.8f;
@@ -168,7 +168,7 @@ public class Turret : MonoBehaviour
 						return 1.2f;
 						break;
 					case Turret.Element.B:
-						return 1f;
+						return 0.5f;
 						break;
 					case Turret.Element.E:
 						return 0.8f;
@@ -193,7 +193,7 @@ public class Turret : MonoBehaviour
 						return 1.2f;
 						break;
 					case Turret.Element.E:
-						return 1f;
+						return 0.5f;
 						break;			
 				}
 				break;			

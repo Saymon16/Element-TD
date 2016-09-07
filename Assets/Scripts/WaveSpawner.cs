@@ -94,6 +94,7 @@ public class WaveSpawner : MonoBehaviour
 		e.speed = waveHolder.waves[waveIndex].speed;
 		e.health = waveHolder.waves[waveIndex].health;
 		e.gold = waveHolder.waves[waveIndex].gold;
+		e.score = waveHolder.waves[waveIndex].score;
 		switch (waveHolder.waves[waveIndex].element) {
 			case WaveAttribute.Element.N:
 				e.element = Enemy.Element.N;
