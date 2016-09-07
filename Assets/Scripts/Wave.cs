@@ -2,7 +2,7 @@
 using System.Collections;
 
 [System.Serializable]
-public class Wave : MonoBehaviour
+public class Wave 
 {
 	public WaveAttribute[] waves;
 }
