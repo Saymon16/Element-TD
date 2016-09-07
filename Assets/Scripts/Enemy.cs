@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -15,9 +16,12 @@ public class Enemy : MonoBehaviour
 		E}
 
 	;
+
 	public Element element;
 	public float speed;
 	public float health;
+	float maxhealth;
+	public Image healthBar;
 
 	public event Action reachedEndEvent;
 	public event Action diedEvent;
@@ -28,6 +32,7 @@ public class Enemy : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
+		maxhealth = health;
 		wp = GameObject.FindObjectOfType<Waypoints>();
 		targetWaypoint = wp.GetNextWaypoint(targetWaypoint);
 	}
@@ -35,6 +40,7 @@ public class Enemy : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{		
+		RefreshHealthBar();
 		if (targetWaypoint != null) {
 			Move();
 		} else {
@@ -43,6 +49,17 @@ public class Enemy : MonoBehaviour
 			}
 			Destroy(gameObject);
 		}
+	}
+
+	void RefreshHealthBar()
+	{
+		if (health == maxhealth) {
+			healthBar.rectTransform.parent.gameObject.SetActive(false);
+		} else {
+			healthBar.rectTransform.parent.gameObject.SetActive(true);
+		}
+		float scale = Mathf.Clamp01(health/maxhealth);
+		healthBar.rectTransform.localScale = new Vector3(scale, 1, 1);
 	}
 
 	public void Die()
@@ -60,7 +77,8 @@ public class Enemy : MonoBehaviour
 		transform.Translate(dir * Time.deltaTime * speed);
 	}
 
-	public void TakeHit(float amount,Transform origin){
+	public void TakeHit(float amount, Transform origin)
+	{
 		health -= amount;
 		if (health <= 0) {
 			origin.GetComponent<Turret>().killCount++;
@@ -75,7 +93,7 @@ public class Enemy : MonoBehaviour
 		}
 		if (col.tag == "Projectile") {
 			Projectile p = col.GetComponent<Projectile>();
-			TakeHit(p.damage,p.origin);
+			TakeHit(p.damage, p.origin);
 			col.gameObject.GetComponent<Renderer>().enabled = false;
 			col.gameObject.GetComponent<SphereCollider>().enabled = false;
 			col.gameObject.GetComponent<ParticleSystem>().Stop();
