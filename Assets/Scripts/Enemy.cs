@@ -76,7 +76,9 @@ public class Enemy : MonoBehaviour
 		if (col.tag == "Projectile") {
 			Projectile p = col.GetComponent<Projectile>();
 			TakeHit(p.damage,p.origin);
-			Destroy(col.gameObject);
+			col.gameObject.GetComponent<Renderer>().enabled = false;
+			col.gameObject.GetComponent<SphereCollider>().enabled = false;
+			col.gameObject.GetComponent<ParticleSystem>().Stop();
 		}
 	}
 }
