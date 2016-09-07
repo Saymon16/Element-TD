@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
 	;
 
 	public Element element;
+	public float gold;
 	public float speed;
 	public float health;
 	float maxhealth;

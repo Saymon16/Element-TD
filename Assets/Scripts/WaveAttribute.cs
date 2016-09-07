@@ -21,4 +21,7 @@ public class WaveAttribute
 	public float health;
 	public Color color;
 	public float size = 1;
+	public int gold;
 }
+
+

@@ -5,28 +5,54 @@ using System.Collections.Generic;
 public class WaveSpawner : MonoBehaviour
 {
 
-	public Wave waveHolder;
+
+	public WaveGenerator waveGenerator;
 	public Transform spawnPoint;
 	public Transform minionHolder;
 	public int enemyCount;
 	public float timeBetweenSpawns;
 	public float timeBetweenWaves;
 	public GameObject minionPrefab;
+	public int initialScore = 100;
+	Wave waveHolder;
 	float nextSpawn;
 	int waveIndex;
 	int currentWaveSpawnsRemaining;
 	bool canSpawn = true;
 	bool noMoreWaves = false;
-
+	int lastScore;
+	float waveNumberInc;
+	int waveCount;
 	void Start()
 	{
+		waveHolder = new Wave();
+		waveNumberInc = 3f;
+		lastScore = initialScore;
+		InitWaves(Mathf.RoundToInt(waveNumberInc),initialScore);
 		nextSpawn = timeBetweenSpawns + Time.time;
 		waveIndex = 0;
 		currentWaveSpawnsRemaining = waveHolder.waves[0].number;
 	}
 
+	void InitWaves(int wavesNumber,int score){		
+		waveHolder.waves = new WaveAttribute[wavesNumber];
+		for (int i = 0; i < wavesNumber; i++) {
+			waveHolder.waves[i] = waveGenerator.GenerateRound(score);
+		}
+	}
+
 	void Update()
 	{
+		if (noMoreWaves) {
+			waveNumberInc += 0.4f;
+			lastScore += (5*waveCount);
+			InitWaves(Mathf.RoundToInt(waveNumberInc),Mathf.RoundToInt(lastScore));
+			nextSpawn = timeBetweenSpawns + Time.time;
+			waveIndex = 0;
+			currentWaveSpawnsRemaining = waveHolder.waves[0].number;
+			noMoreWaves = false;
+		}
+
 		enemyCount = minionHolder.childCount;
 		if (!canSpawn && enemyCount == 0) {
 			canSpawn = true;
@@ -41,6 +67,7 @@ public class WaveSpawner : MonoBehaviour
 				canSpawn = false;
 				if (waveIndex < waveHolder.waves.Length-1) {
 					waveIndex++;
+					waveCount++;
 					currentWaveSpawnsRemaining = waveHolder.waves[waveIndex].number;
 				} else {
 					noMoreWaves = true;
@@ -66,6 +93,7 @@ public class WaveSpawner : MonoBehaviour
 		g.transform.position = new Vector3(g.transform.position.x, waveHolder.waves[waveIndex].size * 0.25f, g.transform.position.z);
 		e.speed = waveHolder.waves[waveIndex].speed;
 		e.health = waveHolder.waves[waveIndex].health;
+		e.gold = waveHolder.waves[waveIndex].gold;
 		switch (waveHolder.waves[waveIndex].element) {
 			case WaveAttribute.Element.N:
 				e.element = Enemy.Element.N;
