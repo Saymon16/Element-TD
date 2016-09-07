@@ -55,6 +55,8 @@ public class Turret : MonoBehaviour
 		target = null;
 		nextShot = timeBetweenShots + Time.time;
 		nextTargetScan = Time.time + 0.5f;
+		DrawCircle dc = transform.GetComponent<DrawCircle>();
+		dc.radius = range;
 	}
 
 
@@ -243,7 +245,7 @@ public class Turret : MonoBehaviour
 
 	void ShootAt(Transform t, float d)
 	{
-		GameObject g = Instantiate(projectilePrefab, new Vector3(transform.position.x, transform.position.y + projectileOffsetY, transform.position.z), Quaternion.identity) as GameObject;
+		GameObject g = Instantiate(projectilePrefab, new Vector3(transform.position.x, transform.position.y + projectileOffsetY, transform.position.z), Quaternion.identity,this.transform) as GameObject;
 		Projectile p = g.GetComponent<Projectile>();
 		p.origin = this.transform;
 		p.damage = d;
