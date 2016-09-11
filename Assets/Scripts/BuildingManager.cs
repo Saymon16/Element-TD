@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
-using System.Collections.Generic;
 
 public class BuildingManager : MonoBehaviour
 {
@@ -9,6 +9,7 @@ public class BuildingManager : MonoBehaviour
 	public GameObject[] towerPrefabs;
 	Tile[] tiles;
 	string lastChoice = "";
+	public Slider slider;
 
 	void Start()
 	{
@@ -55,6 +56,23 @@ public class BuildingManager : MonoBehaviour
 				break;
 		}
 		return null;
+	}
+
+	public void TimeScale(){
+		switch ((int)slider.value) {
+			case 0:
+				Time.timeScale = .5f;
+				break;
+			case 1:
+				Time.timeScale = 1f;
+				break;
+			case 2:
+				Time.timeScale = 2f;
+				break;
+			case 3:
+				Time.timeScale = 5f;
+				break;
+		}
 	}
 
 	int NameToPrice(string name)
